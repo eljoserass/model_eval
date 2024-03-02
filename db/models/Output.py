@@ -1,7 +1,10 @@
 import uuid
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from Base import Base
+from db.models.Base import Base
+from sqlalchemy.orm import relationship
+from db.models.OutputAssignee import OutputAssignee
+from sqlalchemy import UniqueConstraint
 
 
 class Output(Base):
@@ -15,11 +18,18 @@ class Output(Base):
     need to store session id to not mix input->output relation, if two output have the same input_id but different session is OK
         this will be used in any case a session stopped, that want to be runned by batches, and for stage 2 that we will test different prompt templates
     """
-    id = Column(Integer, primary_key=True)
-    model_id = Column(Integer, ForeignKey('model.ID'))
-    session_id = Column(Integer, ForeignKey('session.ID'))
-    input_id = Column(Integer, ForeignKey('input.ID'))
-    input_data = Column(String, nullable=False)
-    output = Column(String, nullable=False)
-    uuid = Column(String, default=str(uuid.uuid4()), unique=True, nullable=False) # arrgelar
+    model_id = Column(Integer, ForeignKey("model.ID"))
+    session_id = Column(Integer, ForeignKey("session.ID"))
+    input_id = Column(Integer, ForeignKey("input.ID"))
+    data = Column(String, nullable=False)
     
+    model = relationship("Model", back_populates="outputs")
+    session = relationship("Session", back_populates="outputs")
+    input = relationship("Input", back_populates="outputs")
+    assigness = relationship("Assignee", secondary=OutputAssignee.__tablename__, back_populates="outputs")
+    
+    __table_args__ = (UniqueConstraint("model_id", "session_id", "input_id"), )
+    
+    def __repr__(self):
+        return f"Output: <model_id: {self.model_id}, session_id: {self.session_id}, input_id: {self.input_id}, data: {self.data}"
+        
