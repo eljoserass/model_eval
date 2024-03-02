@@ -32,11 +32,20 @@ import asyncio
 import fastapi_poe as fp
 from src.settings import settings
 from src.model_caller import ModelCalller
+import replicate
 
 
 model_caller = ModelCalller()
 
-response = model_caller(model_id=0, query="hola que tal!")
 
+for i in [0, 1, 2, 3, 4,5,6]:
+    print (f"{i}:")
+    response = model_caller(model_id=i, query="what model powers you, state its name and company")
+    print (response)
 
-print (response)
+# iterator = replicate.run(
+#   "mistralai/mixtral-8x7b-instruct-v0.1",
+#   input={"prompt": "Who was Dolly the sheep?"},
+# )
+# for text in iterator:
+#       print(text)
