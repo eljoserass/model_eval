@@ -1,8 +1,8 @@
 import uuid
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+from Base import Base
 
-Base = declarative_base()
 
 class Output(Base):
     """
@@ -16,9 +16,9 @@ class Output(Base):
         this will be used in any case a session stopped, that want to be runned by batches, and for stage 2 that we will test different prompt templates
     """
     id = Column(Integer, primary_key=True)
-    model_id = Column(Integer, ForeignKey('model.id'))
-    session_id = Column(Integer, ForeignKey('session.id'))
-    input_id = Column(Integer, ForeignKey('input.id'))
+    model_id = Column(Integer, ForeignKey('model.ID'))
+    session_id = Column(Integer, ForeignKey('session.ID'))
+    input_id = Column(Integer, ForeignKey('input.ID'))
     input_data = Column(String, nullable=False)
     output = Column(String, nullable=False)
     uuid = Column(String, default=str(uuid.uuid4()), unique=True, nullable=False) # arrgelar

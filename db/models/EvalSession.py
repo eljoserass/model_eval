@@ -1,8 +1,8 @@
 import uuid
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+from Base import Base
 
-Base = declarative_base()
 
 class EvalSession(Base):
     """
