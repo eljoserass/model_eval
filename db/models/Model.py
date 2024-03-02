@@ -10,4 +10,6 @@ class Model(Base):
     """
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
+    provider = Column(String, nullable=False)
+    
     outputs = relationship('outputs', back_populates='model')

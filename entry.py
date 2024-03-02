@@ -30,18 +30,13 @@ pass answer to response_storer, with the model_id from the table
 
 import asyncio
 import fastapi_poe as fp
+from src.settings import settings
+from src.model_caller import ModelCalller
 
 
+model_caller = ModelCalller()
 
-async def get_responses(api_key, messages):
-    response = ""
-    async for partial in fp.get_bot_response(messages=messages, bot_name="GPT-3.5-Turbo", api_key=api_key):
-        # print (partial)
-        response += partial.text
-    return response
+response = model_caller(model_id=0, query="hola que tal!")
 
-message = fp.ProtocolMessage(role="user", content="hola!")
 
-# Run the event loop
-complete_response = asyncio.run(get_responses(KEY, [message]))
-print(complete_response)
+print (response)
