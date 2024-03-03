@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import not_
 from db.daos.BaseDao import BaseDao
 from db.models.Input import Input
+from sqlalchemy.sql.expression import func
 
 
 class InputDao(BaseDao):
@@ -10,6 +11,13 @@ class InputDao(BaseDao):
 
     def get_by_uuid(self, uuid: str) -> Input | None:
         input = self.session.query(Input).filter(Input.uuid == uuid).first()
+        return input
+    
+    def get_with_limit(self, limit: int, shuffle: bool = False) -> list[Input]:
+        if shuffle:
+            input = self.session.query(Input).order_by(func.random()).limit(limit).all()
+        else:
+            input = self.session.query(Input).limit(limit).all()
         return input
     
     def get_all(self) -> list[Input]:
