@@ -1,5 +1,7 @@
 from db.connector import session
 from db.daos.AssigneeDao import AssigneeDao
+from db.daos.ModelDao import ModelDao
+from db.schemas.ModelSchema import ModelCreate
 from db.daos.InputDao import InputDao
 from db.schemas.AssigneeSchema import AssigneeCreate
 from db.schemas.InputSchema import InputCreate
@@ -11,6 +13,17 @@ from db.models.Input import Label
 
 Base.metadata.create_all(bind=engine)
 
+
+
+ModelDao(session).create(ModelCreate(name="GPT-3.5-Turbo", provider="poe"))
+ModelDao(session).create(ModelCreate(name="GPT4", provider="poe"))
+ModelDao(session).create(ModelCreate(name="Mistral-Large", provider="poe"))
+ModelDao(session).create(ModelCreate(name="Mixtral-8x7b-Groq", provider="poe"))
+ModelDao(session).create(ModelCreate(name="Gemini-Pro", provider="poe"))
+ModelDao(session).create(ModelCreate(name="Llama-2-70b", provider="poe"))
+ModelDao(session).create(ModelCreate(name="mistralai/mistral-7b-instruct-v0.2", provider="replicate"))
+ModelDao(session).create(ModelCreate(name="mistralai/mixtral-8x7b-instruct-v0.1", provider="replicate"))
+ModelDao(session).create(ModelCreate(name="Mixtral_CA", provider="poe"))
 
 AssigneeDao(session).create(AssigneeCreate(name="Harry", email="ha2098@hw.ac.uk").model_dump())
 AssigneeDao(session).create(AssigneeCreate(name="Buhari", email="bb2052@hw.ac.uk").model_dump())
