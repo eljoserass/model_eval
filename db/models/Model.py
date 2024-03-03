@@ -3,7 +3,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from db.models.Base import Base
 from sqlalchemy import Enum as SQLAlchemyEnum
-
 from enum import Enum
 
 class Provider(Enum):
