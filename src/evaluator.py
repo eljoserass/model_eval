@@ -15,3 +15,17 @@ will get output from model_caller and save it through output_store
 interesting to add feature that repeats intentionally the input to see if response is deterministically the same
 - have to add row to outputs that allow an output to be repeated
 """
+from src.model_caller import ModelCalller
+from db.daos.ModelDao import ModelDao
+from db.daos.InputDao import InputDao
+from db.connector import session
+
+class Evaluator:
+    def __init__(self):
+        self.models = ModelDao(session).get_all()
+        self.model_caller = ModelCalller()
+        self.inputs = InputDao(session).get_all()
+    
+    def run(self, session_name: str, inputs: int | None = None) -> None:
+        for model in self.models:
+            pass

@@ -56,8 +56,20 @@ class ModelCalller:
                 "id": 6,
                 "name": "mistralai/mistral-7b-instruct-v0.2",
                 "provider": "replicate"
-            }
+            },
+            {
+                "id": 7,
+                "name": "mistralai/mixtral-8x7b-instruct-v0.1",
+                "provider": "replicate"
+            },
+            {
+                "id": 8,
+                "name": "Mixtral_CA",
+                "provider": "poe"
+            },
+            
         ]
+        # models_list = 
         self.models = list_to_dict(models_list)
     
     async def get_responses_poe(self, bot_name: str, messages: list[ProtocolMessage]) -> str:
@@ -76,7 +88,7 @@ class ModelCalller:
             response += text
         return response
     
-    def __call__(self, model_id: int, query: str) -> str:
+    def __call__(self, model_name: str, query: str, provider: str) -> str:
         model = self.models.get(model_id)
         if model["provider"] == "poe":
             return asyncio.run(self.get_responses_poe(messages=[ProtocolMessage(role="user", content=query)],
