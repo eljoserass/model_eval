@@ -24,6 +24,7 @@ ModelDao(session).create(ModelCreate(name="Llama-2-70b", provider=Provider.POE).
 ModelDao(session).create(ModelCreate(name="mistralai/mistral-7b-instruct-v0.2", provider=Provider.REPLICATE).model_dump())
 ModelDao(session).create(ModelCreate(name="mistralai/mixtral-8x7b-instruct-v0.1", provider=Provider.REPLICATE).model_dump())
 ModelDao(session).create(ModelCreate(name="Mixtral_CA", provider=Provider.POE).model_dump())
+ModelDao(session).create(ModelCreate(name="Claude-2-100k", provider=Provider.POE).model_dump())
 
 AssigneeDao(session).create(AssigneeCreate(name="Harry", email="ha2098@hw.ac.uk").model_dump())
 AssigneeDao(session).create(AssigneeCreate(name="Buhari", email="bb2052@hw.ac.uk").model_dump())

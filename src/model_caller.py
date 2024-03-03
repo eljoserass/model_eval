@@ -35,10 +35,21 @@ class ModelCalller:
         return response
     
     def __call__(self, model_name: str, query: str, provider: Provider) -> str:
+        response = ""
         if provider == Provider.POE:
-            return asyncio.run(self.get_responses_poe(messages=[ProtocolMessage(role="user", content=query)],
+            try:
+                response = asyncio.run(self.get_responses_poe(messages=[ProtocolMessage(role="user", content=query)],
                                                       bot_name=model_name)) # system prompt
+            except Exception as e:
+                response = f"none:  {e}"
+            return response
         elif provider == Provider.REPLICATE:
-            return self.get_responses_replicate(query=query, name=model_name) # maybe change this to list of messages and system prompt
+            try:
+                response = self.get_responses_replicate(query=query, name=model_name) # maybe change this to list of messages and system prompt
+            except Exception as e:
+                response = f"none: {e}"
+            return response
         elif provider == Provider.OLLAMA:
             return "not implemented"
+        else:
+            return "none"

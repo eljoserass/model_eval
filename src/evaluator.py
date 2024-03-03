@@ -49,7 +49,6 @@ class Evaluator:
             )
         except Exception as e:
             print (e)
-            print ("pene")
             pass
         experiment_session = SessionDao(session).get_by_name(name=session_name)
         print(experiment_session)
@@ -79,4 +78,3 @@ class Evaluator:
                         session_id=self.session_id,
                         input_id=query.ID
                     ).model_dump())
-                
