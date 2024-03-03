@@ -42,14 +42,13 @@ class Evaluator:
     
     def get_session_id(self, session_name: str) -> int:
         session_obj = SessionDao(session).get_by_name(name=session_name)
-        if not session_obj:
+        if session_obj == None:
             SessionDao(session).create(
                 SessionCreate(
                     name=session_name
                 ).model_dump()
             )
-        else:
-            session_obj = SessionDao(session).get_by_name(name=session_name)
+        session_obj = SessionDao(session).get_by_name(name=session_name)
         return session_obj.ID
     
     def run(self,
