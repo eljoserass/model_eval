@@ -41,18 +41,16 @@ class Evaluator:
                 print (f"{model.name}:\n{response}")
     
     def get_session_id(self, session_name: str) -> int:
-        try:
+        session_obj = SessionDao(session).get_by_name(name=session_name)
+        if not session_obj:
             SessionDao(session).create(
                 SessionCreate(
                     name=session_name
                 ).model_dump()
             )
-        except Exception as e:
-            print (e)
-            pass
-        experiment_session = SessionDao(session).get_by_name(name=session_name)
-        print(experiment_session)
-        return experiment_session.ID
+        else:
+            session_obj = SessionDao(session).get_by_name(name=session_name)
+        return session_obj.ID
     
     def run(self,
             force_inputs: list[InputCreate] = None,
