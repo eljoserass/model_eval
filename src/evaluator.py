@@ -28,32 +28,34 @@ from db.daos.InputDao import InputDao
 from db.connector import session
 
 class Evaluator:
-    def __init__(self, session_name: str):
+    def __init__(self, session_name: str, n_inputs: int | None = None, shuffle: bool = True):
         self.models = ModelDao(session).get_all()
         self.model_caller = ModelCalller()
-        self.inputs = InputDao(session).get_all()
+        self.inputs = InputDao(session).get_with_limit(n_inputs, shuffle=shuffle)
         self.session_id = self.get_session_id(session_name)
+
     def run_debug(self, inputs: list[InputCreate], models: list[ModelCreate]):
         for model in models:
             for query in inputs:
                 response = self.model_caller(model_name=model.name, query=query.data, provider=model.provider)
                 print (f"{model.name}:\n{response}")
     
-    def get_session_id(session_name: str) -> int:
-        session_id = None
+    def get_session_id(self, session_name: str) -> int:
         try:
             SessionDao(session).create(
                 SessionCreate(
                     name=session_name
-                )
+                ).model_dump()
             )
-        except Exception:
-            session_id = None
-        session_id = SessionDao(session).get_by_name(name=session_name).ID
-        return session_id
+        except Exception as e:
+            print (e)
+            print ("pene")
+            pass
+        experiment_session = SessionDao(session).get_by_name(name=session_name)
+        print(experiment_session)
+        return experiment_session.ID
     
     def run(self,
-            n_inputs: int | None = None,
             force_inputs: list[InputCreate] = None,
             force_models: list[ModelCreate] = None,
             debug: bool = False) -> None:
@@ -65,13 +67,16 @@ class Evaluator:
         for model in self.models:
             
             for query in self.inputs:
+                print (f"query={query.data} modelname={model.name}  provider={model.provider}")
                 response = self.model_caller(model_name=model.name, query=query.data, provider=model.provider)
-               
+
+                print (f"{model.name}:\n{response}")
+                
                 OutputDao(session).create(
                     OutputCreate(
                         data=response,
                         model_id=model.ID,
                         session_id=self.session_id,
                         input_id=query.ID
-                    ))
+                    ).model_dump())
                 

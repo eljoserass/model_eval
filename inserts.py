@@ -10,20 +10,20 @@ from db.connector import engine
 from db.models import Assignee, Input, Model, Output, OutputAssignee, Session
 from db.connector import session
 from db.models.Input import Label
-
+from db.models.Model import Provider
 Base.metadata.create_all(bind=engine)
 
 
 
-ModelDao(session).create(ModelCreate(name="GPT-3.5-Turbo", provider="poe"))
-ModelDao(session).create(ModelCreate(name="GPT4", provider="poe"))
-ModelDao(session).create(ModelCreate(name="Mistral-Large", provider="poe"))
-ModelDao(session).create(ModelCreate(name="Mixtral-8x7b-Groq", provider="poe"))
-ModelDao(session).create(ModelCreate(name="Gemini-Pro", provider="poe"))
-ModelDao(session).create(ModelCreate(name="Llama-2-70b", provider="poe"))
-ModelDao(session).create(ModelCreate(name="mistralai/mistral-7b-instruct-v0.2", provider="replicate"))
-ModelDao(session).create(ModelCreate(name="mistralai/mixtral-8x7b-instruct-v0.1", provider="replicate"))
-ModelDao(session).create(ModelCreate(name="Mixtral_CA", provider="poe"))
+ModelDao(session).create(ModelCreate(name="GPT-3.5-Turbo", provider=Provider.POE).model_dump())
+ModelDao(session).create(ModelCreate(name="GPT4", provider=Provider.POE).model_dump())
+ModelDao(session).create(ModelCreate(name="Mistral-Large", provider=Provider.POE).model_dump())
+ModelDao(session).create(ModelCreate(name="Mixtral-8x7b-Groq", provider=Provider.POE).model_dump())
+ModelDao(session).create(ModelCreate(name="Gemini-Pro", provider=Provider.POE).model_dump())
+ModelDao(session).create(ModelCreate(name="Llama-2-70b", provider=Provider.POE).model_dump())
+ModelDao(session).create(ModelCreate(name="mistralai/mistral-7b-instruct-v0.2", provider=Provider.REPLICATE).model_dump())
+ModelDao(session).create(ModelCreate(name="mistralai/mixtral-8x7b-instruct-v0.1", provider=Provider.REPLICATE).model_dump())
+ModelDao(session).create(ModelCreate(name="Mixtral_CA", provider=Provider.POE).model_dump())
 
 AssigneeDao(session).create(AssigneeCreate(name="Harry", email="ha2098@hw.ac.uk").model_dump())
 AssigneeDao(session).create(AssigneeCreate(name="Buhari", email="bb2052@hw.ac.uk").model_dump())

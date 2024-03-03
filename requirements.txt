@@ -1,12 +1,11 @@
 #poe api
 fastapi_poe
 
-#typing 
-pydantic
-pydantic_settings
-
 # replicate
 replicate
 
 # db
 sqlalchemy
+pydantic
+pydantic_settings
+pydantic[email]

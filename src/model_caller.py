@@ -12,10 +12,7 @@ import asyncio
 import fastapi_poe as fp
 from fastapi_poe import ProtocolMessage
 import replicate
-
-def list_to_dict(models_list: list):
-    models_dict = {model["id"]: model for model in models_list}
-    return models_dict
+from db.models.Model import Provider
 
 class ModelCalller:
     def __init__(self):
@@ -37,11 +34,11 @@ class ModelCalller:
             response += text
         return response
     
-    def __call__(self, model_name: str, query: str, provider: str) -> str:
-        if provider == "poe":
+    def __call__(self, model_name: str, query: str, provider: Provider) -> str:
+        if provider == Provider.POE:
             return asyncio.run(self.get_responses_poe(messages=[ProtocolMessage(role="user", content=query)],
                                                       bot_name=model_name)) # system prompt
-        elif provider == "replicate":
+        elif provider == Provider.REPLICATE:
             return self.get_responses_replicate(query=query, name=model_name) # maybe change this to list of messages and system prompt
-        elif provider == "ollama":
+        elif provider == Provider.OLLAMA:
             return "not implemented"
