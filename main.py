@@ -25,9 +25,6 @@ def get_inputs(file:str) -> list[str]:
     return lines
 
 
-# def dump_output(filename:str):
-
-
 args = parser.parse_args()
 
 
