@@ -14,6 +14,6 @@ class Model(Base):
     """
     need to store models to know who is "responsable" for each output
     """
-    name = Column(String, nullable=False, unique=True)
+    name = Column(String(256), nullable=False, unique=True)
     provider = Column(SQLAlchemyEnum(Provider), nullable=False)
     outputs = relationship("Output", back_populates="model")

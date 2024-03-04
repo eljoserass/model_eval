@@ -7,7 +7,7 @@ import uuid
 class Base():
     __name__: str
     ID = Column(Integer, primary_key=True)
-    uuid = Column(String, unique=True, nullable=False, default=lambda: str(uuid.uuid4()))
+    uuid = Column(String(36), unique=True, nullable=False, default=lambda: str(uuid.uuid4()))
 
     @declared_attr
     def __tablename__(cls):
