@@ -9,5 +9,5 @@ class Session(Base):
     """
     need to store eval session to label output into different experiments
     """
-    name  = Column(String, nullable=False, unique=True)
+    name  = Column(String(256), nullable=False, unique=True)
     outputs = relationship("Output", back_populates="session")

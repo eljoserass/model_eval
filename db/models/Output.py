@@ -5,6 +5,7 @@ from db.models.Base import Base
 from sqlalchemy.orm import relationship
 from db.models.OutputAssignee import OutputAssignee
 from sqlalchemy import UniqueConstraint
+from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
 
 class Output(Base):
@@ -21,7 +22,7 @@ class Output(Base):
     model_id = Column(Integer, ForeignKey("model.ID"))
     session_id = Column(Integer, ForeignKey("session.ID"))
     input_id = Column(Integer, ForeignKey("input.ID"))
-    data = Column(String, nullable=False)
+    data = Column(MEDIUMTEXT, nullable=False)
     
     model = relationship("Model", back_populates="outputs")
     session = relationship("Session", back_populates="outputs")
