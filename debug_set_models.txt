@@ -1,0 +1,2 @@
+Mixtral_CA poe
+mistralai/mixtral-8x7b-instruct-v0.1 replicate  

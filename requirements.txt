@@ -1,2 +1,11 @@
 #poe api
 fastapi_poe
+
+# replicate
+replicate
+
+# db
+sqlalchemy
+pydantic
+pydantic_settings
+pydantic[email]

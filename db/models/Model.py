@@ -1,14 +1,19 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from db.models.Base import Base
+from sqlalchemy import Enum as SQLAlchemyEnum
+from enum import Enum
 
-
-Base = declarative_base()
+class Provider(Enum):
+    POE = "POE"
+    REPLICATE = "REPLICATE"
+    OLLAMA = "OLLAMA"
 
 class Model(Base):
     """
     need to store models to know who is "responsable" for each output
     """
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    outputs = relationship('outputs', back_populates='model')
+    name = Column(String(256), nullable=False, unique=True)
+    provider = Column(SQLAlchemyEnum(Provider), nullable=False)
+    outputs = relationship("Output", back_populates="model")

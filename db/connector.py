@@ -1,8 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from src.settings import settings
 
-db_path = 'beta.db'
-engine = create_engine(f'sqlite:///{db_path}', echo=True)
+SQLALCHEMY_DATABASE_URL = settings.DB_URL.unicode_string()
 
-Session = sessionmaker(bind=engine)
-session = Session()
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+session = SessionLocal()
