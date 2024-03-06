@@ -12,6 +12,10 @@ class OutputDao(BaseDao):
         output = self.session.query(Output).filter(Output.uuid == uuid).first()
         return output
     
+    def get_by_session_model_input_id(self, session_id: int, model_id: int, input_id: int) -> Output | None:
+        output = self.session.query(Output).filter(Output.session_id == session_id).filter(Output.model_id == model_id).filter(Output.input_id == input_id).first()
+        return output
+    
     def get_all(self) -> list[Output]:
         output = self.session.query(Output).all()
         return output
