@@ -13,6 +13,8 @@ import fastapi_poe as fp
 from fastapi_poe import ProtocolMessage
 import replicate
 from db.models.Model import Provider
+from db.daos.OutputDao import OutputDao
+from sqlalchemy.orm import Session
 
 class ModelCalller:
     def __init__(self):
@@ -28,11 +30,14 @@ class ModelCalller:
         response = ""
         iterator = replicate.run(
                     name,
-                    input={"prompt": query},
+                    input={"prompt": query}
                     )
         for text in iterator:
             response += text
         return response
+
+    def verify(self, session_id: int, model_id: int, query_id: int, session_db: Session):
+        return OutputDao(session_db).get_by_session_model_input_id(session_id=session_id, model_id=model_id, input_id=query_id)
     
     def __call__(self, model_name: str, query: str, provider: Provider) -> str:
         response = ""

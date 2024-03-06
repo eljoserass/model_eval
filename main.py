@@ -1,5 +1,5 @@
 from src.evaluator import Evaluator
-from db.models import Assignee, Output, Model
+from db.models import Assignee, Output, Model, Assignee_Output, Evaluation, Input, Prompt, Session_Assignee, Session_Input, Session_Model, Session_Prompt
 from db.schemas.InputSchema import InputCreate
 from db.schemas.ModelSchema import ModelCreate
 from db.models.Model import Provider
