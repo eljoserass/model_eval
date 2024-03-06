@@ -13,6 +13,10 @@ class InputDao(BaseDao):
         input = self.session.query(Input).filter(Input.uuid == uuid).first()
         return input
     
+    def get_by_data(self, data: str) -> Input | None:
+        input = self.session.query(Input).filter(Input.data == data).first()
+        return input
+    
     def get_with_limit(self, limit: int | None, shuffle: bool = False) -> list[Input]:
         if shuffle:
             input = self.session.query(Input).order_by(func.random()).limit(limit).all()
