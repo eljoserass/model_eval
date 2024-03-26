@@ -39,11 +39,14 @@ class ModelCalller:
     def verify(self, session_id: int, model_id: int, query_id: int, session_db: Session):
         return OutputDao(session_db).get_by_session_model_input_id(session_id=session_id, model_id=model_id, input_id=query_id)
     
-    def __call__(self, model_name: str, query: str, provider: Provider) -> str:
+    def __call__(self, model_name: str, query: str, system_prompt: str, provider: Provider) -> str:
         response = ""
         if provider == Provider.POE:
             try:
-                response = asyncio.run(self.get_responses_poe(messages=[ProtocolMessage(role="user", content=query)],
+                response = asyncio.run(self.get_responses_poe(messages=[
+                                                        ProtocolMessage(role="system", content=system_prompt),
+                                                        ProtocolMessage(role="user", content=query)
+                                                        ],
                                                       bot_name=model_name)) # system prompt
             except Exception as e:
                 response = f"none:  {e}"

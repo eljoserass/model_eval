@@ -33,11 +33,12 @@ class Evaluator:
         # with get_session() as db:
         #     self.session_obj = SessionDao(db).get_by_name(session_name)
 
-    def run_debug(self, inputs: list[InputCreate], models: list[ModelCreate]):
-        for model in models:
-            for query in inputs:
-                response = self.model_caller(model_name=model.name, query=query.data, provider=model.provider)
-                print (f"{model.name}:\n{response}")
+    def run_debug(self, inputs: list[InputCreate], models: list[ModelCreate], system_prompts: list[str]):
+        for prompt in system_prompts:
+            for model in models:
+                for query in inputs:
+                    response = self.model_caller(model_name=model.name, query=query.data, provider=model.provider, system_prompt=prompt)
+                    print (f"{model.name}:\n{response}")
 
     
     def run(self,
@@ -51,16 +52,20 @@ class Evaluator:
         
         with get_session() as db:
             session_obj = SessionDao(db).get_by_name(self.session_name)
-            
-            for model in session_obj.models:
-                for query in session_obj.inputs:
-                    print (f"query={query.data} modelname={model.name}  provider={model.provider}")
-                    if not self.model_caller.verify(session_id=session_obj.ID, model_id=model.ID, query_id=query.ID, session_db=db):
-                        response = self.model_caller(model_name=model.name, query=query.data, provider=model.provider)
-                        OutputDao(db).create(
-                                OutputCreate(
-                                    data=response,
-                                    model_id=model.ID,
-                                    session_id=session_obj.ID,
-                                    input_id=query.ID
-                            ).model_dump())
+
+
+
+            for system_prompt in session_obj.prompts:
+                print (f"SYS\n{system_prompt.data}")
+                for model in session_obj.models:
+                    for query in session_obj.inputs:
+                        print (f"query={query.data} modelname={model.name}  provider={model.provider}")
+                        if not self.model_caller.verify(session_id=session_obj.ID, model_id=model.ID, query_id=query.ID, session_db=db):
+                            response = self.model_caller(model_name=model.name, query=query.data, provider=model.provider, system_prompt=system_prompt.data)
+                            OutputDao(db).create(
+                                    OutputCreate(
+                                        data=response,
+                                        model_id=model.ID,
+                                        session_id=session_obj.ID,
+                                        input_id=query.ID
+                                ).model_dump())
