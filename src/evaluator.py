@@ -25,6 +25,8 @@ from db.schemas.SessionSchema import SessionCreate
 from db.schemas.InputSchema import InputCreate
 
 from db.connector import get_session
+import csv
+
 
 class Evaluator:
     def __init__(self, session_name: str, n_inputs: int | None = None, shuffle: bool = True):
@@ -34,11 +36,21 @@ class Evaluator:
         #     self.session_obj = SessionDao(db).get_by_name(session_name)
 
     def run_debug(self, inputs: list[InputCreate], models: list[ModelCreate], system_prompts: list[str]):
-        for prompt in system_prompts:
-            for model in models:
-                for query in inputs:
-                    response = self.model_caller(model_name=model.name, query=query.data, provider=model.provider, system_prompt=prompt)
-                    print (f"{model.name}:\n{response}")
+            with open('out.csv', 'w', newline='') as file:
+                writer = csv.writer(file)
+
+        # Write the header row
+                writer.writerow(["Model Name", "Input Query", "Input Prompt", "Response"])
+                for prompt in system_prompts:
+                    for model in models:
+                        for query in inputs:
+                            response = self.model_caller(model_name=model.name, query=query.data, provider=model.provider, system_prompt=prompt)
+                            model_name = model
+                            input_query = query
+                            input_prompt = prompt
+                            
+                            writer.writerow([model.name, query.data, prompt, response])
+                            # print (f"{model.name}:\n{response}")
 
     
     def run(self,
