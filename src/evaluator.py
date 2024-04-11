@@ -68,6 +68,7 @@ class Evaluator:
                                         data=response,
                                         model_id=model.ID,
                                         session_id=session_obj.ID,
-                                        input_id=query.ID
+                                        input_id=query.ID,
+                                        prompt_id=system_prompt.ID
                                 ).model_dump())
                         counter += 1
