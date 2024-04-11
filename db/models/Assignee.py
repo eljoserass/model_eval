@@ -7,5 +7,7 @@ from db.models.Session_Assignee import Session_Assignee
 class Assignee(Base):
     name = Column(String(256), nullable=False)
     email = Column(String(256), nullable=False, unique=True)
-    outputs = relationship("Output", secondary=Assignee_Output.__tablename__, back_populates="assignees")
+    outputs = relationship("Output", secondary=Assignee_Output.__tablename__, back_populates="assignees", overlaps="assignee_outputs,output")
     sessions = relationship("Session", secondary=Session_Assignee.__tablename__, back_populates="assignees")
+    
+    assignee_outputs = relationship("Assignee_Output", back_populates="assignee")

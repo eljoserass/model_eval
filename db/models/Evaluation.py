@@ -8,5 +8,10 @@ from db.models.Session_Model import Session_Model
 
 class Evaluation(Base):
     assignee_output_id = Column(Integer, ForeignKey("assignee_output.ID"))
-    evaluation = Column(String(256)) #Need to change it
+    #evaluation = Column(String(256)) #Need to change it
+    q1 = Column(Integer, nullable=False)
+    q2 = Column(Integer, nullable=False)
+    q3 = Column(Integer, nullable=False)
+    q4 = Column(String, nullable=False)
     
+    assignee_output = relationship("Assignee_Output", back_populates="evaluations")

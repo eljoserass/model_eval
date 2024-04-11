@@ -3,6 +3,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from db.models.Base import Base
 from sqlalchemy.orm import relationship
+from db.models import Assignee_Output
 from db.models.Assignee_Output import Assignee_Output
 from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
@@ -28,7 +29,11 @@ class Output(Base):
     model = relationship("Model", back_populates="outputs")
     session = relationship("Session", back_populates="outputs")
     input = relationship("Input", back_populates="outputs")
-    assignees = relationship("Assignee", secondary=Assignee_Output.__tablename__, back_populates="outputs")
+    assignees = relationship("Assignee", secondary=Assignee_Output.__tablename__, back_populates="outputs", overlaps="assignee_outputs,assignees,assignee")
+    
+    assignee_outputs = relationship("Assignee_Output", back_populates="output")
+    
+    
     
     __table_args__ = (UniqueConstraint("model_id", "session_id", "input_id"), )
     

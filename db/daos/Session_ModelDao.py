@@ -12,6 +12,10 @@ class Session_ModelDao(BaseDao):
         session_model = self.session.query(Session_Model).filter(Session_Model.uuid == uuid).first()
         return session_model
     
+    def get_by_ids(self, session_id: int, model_id: int):
+        session_models = self.session.query(Session_Model).filter(Session_Model.session_id == session_id).filter(Session_Model.model_id == model_id).first()
+        return session_models
+    
     def get_all(self) -> list[Session_Model]:
         session_model = self.session.query(Session_Model).all()
         return session_model

@@ -12,6 +12,10 @@ class Session_AssigneeDao(BaseDao):
         session_assignee = self.session.query(Session_Assignee).filter(Session_Assignee.uuid == uuid).first()
         return session_assignee
     
+    def get_by_ids(self, session_id: int, assignee_id: int):
+        session_assignee = self.session.query(Session_Assignee).filter(Session_Assignee.session_id == session_id).filter(Session_Assignee.assignee_id == assignee_id).first()
+        return session_assignee
+    
     def get_all(self) -> list[Session_Assignee]:
         session_assignee = self.session.query(Session_Assignee).all()
         return session_assignee

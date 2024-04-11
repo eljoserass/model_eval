@@ -53,13 +53,14 @@ class Evaluator:
         with get_session() as db:
             session_obj = SessionDao(db).get_by_name(self.session_name)
 
-
+            counter = 0
 
             for system_prompt in session_obj.prompts:
                 print (f"SYS\n{system_prompt.data}")
                 for model in session_obj.models:
                     for query in session_obj.inputs:
                         print (f"query={query.data} modelname={model.name}  provider={model.provider}")
+                        print(f"{counter=}")
                         if not self.model_caller.verify(session_id=session_obj.ID, model_id=model.ID, query_id=query.ID, session_db=db):
                             response = self.model_caller(model_name=model.name, query=query.data, provider=model.provider, system_prompt=system_prompt.data)
                             OutputDao(db).create(
@@ -69,3 +70,4 @@ class Evaluator:
                                         session_id=session_obj.ID,
                                         input_id=query.ID
                                 ).model_dump())
+                        counter += 1

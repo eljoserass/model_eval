@@ -15,6 +15,10 @@ class AssigneeDao(BaseDao):
     def get_by_name(self, name: str) -> Assignee | None:
         assignee = self.session.query(Assignee).filter(Assignee.name == name).first()
         return assignee
+    
+    def get_by_email(self, email: str) -> Assignee | None:
+        assignee = self.session.query(Assignee).filter(Assignee.email == email).first()
+        return assignee
 
     def create(self, assignee_data: dict) -> Assignee:
         assignee = Assignee(**assignee_data)
