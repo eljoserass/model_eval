@@ -36,8 +36,8 @@ class ModelCalller:
             response += text
         return response
 
-    def verify(self, session_id: int, model_id: int, query_id: int, session_db: Session):
-        return OutputDao(session_db).get_by_session_model_input_id(session_id=session_id, model_id=model_id, input_id=query_id)
+    def verify(self, session_id: int, model_id: int, query_id: int, prompt_id: int, session_db: Session):
+        return OutputDao(session_db).get_by_session_model_input_prompt_id(session_id=session_id, model_id=model_id, input_id=query_id, prompt_id=prompt_id)
     
     def __call__(self, model_name: str, query: str, system_prompt: str, provider: Provider) -> str:
         response = ""

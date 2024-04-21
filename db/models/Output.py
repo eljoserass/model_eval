@@ -24,18 +24,20 @@ class Output(Base):
     model_id = Column(Integer, ForeignKey("model.ID"))
     session_id = Column(Integer, ForeignKey("session.ID"))
     input_id = Column(Integer, ForeignKey("input.ID"))
+    prompt_id = Column(Integer, ForeignKey("prompt.ID"))
     data = Column(MEDIUMTEXT, nullable=False)
     
     model = relationship("Model", back_populates="outputs")
     session = relationship("Session", back_populates="outputs")
     input = relationship("Input", back_populates="outputs")
+    prompt = relationship("Prompt", back_populates="outputs")
     assignees = relationship("Assignee", secondary=Assignee_Output.__tablename__, back_populates="outputs", overlaps="assignee_outputs,assignees,assignee")
     
     assignee_outputs = relationship("Assignee_Output", back_populates="output")
     
     
     
-    __table_args__ = (UniqueConstraint("model_id", "session_id", "input_id"), )
+    __table_args__ = (UniqueConstraint("model_id", "session_id", "input_id", "prompt_id"), )
     
     def __repr__(self):
         return f"Output: <model_id: {self.model_id}, session_id: {self.session_id}, input_id: {self.input_id}, data: {self.data}"

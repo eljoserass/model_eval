@@ -12,6 +12,7 @@ class Evaluation(Base):
     q1 = Column(Integer, nullable=False)
     q2 = Column(Integer, nullable=False)
     q3 = Column(Integer, nullable=False)
-    q4 = Column(String, nullable=False)
+    q4 = Column(Integer, nullable=False)
+    q5 = Column(Integer, nullable=False)
     
     assignee_output = relationship("Assignee_Output", back_populates="evaluations")

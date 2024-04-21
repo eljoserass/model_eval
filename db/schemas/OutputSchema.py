@@ -11,6 +11,7 @@ class OutputCreate(BaseModel):
     model_id: int
     session_id: int
     input_id: int
+    prompt_id: int
     
     model_config = ConfigDict(protected_namespaces=())
     

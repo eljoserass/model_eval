@@ -9,3 +9,4 @@ class Prompt(Base):
     name = Column(String(256), nullable=False)
     data = Column(TEXT, nullable=False)
     sessions = relationship("Session", secondary=Session_Prompt.__tablename__, back_populates="prompts")
+    outputs = relationship("Output", back_populates="prompt")

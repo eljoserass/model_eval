@@ -7,4 +7,5 @@ class EvaluationCreate(BaseModel):
     q1: int
     q2: int
     q3: int
-    q4: str
+    q4: int
+    q5: int
