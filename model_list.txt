@@ -1,0 +1,40 @@
+GPT-3.5-Turbo -- baseline
+GPT4 -- state of the art
+Mistral-Large -- best model from mistral -- also its new
+Mixtral-8x7b-Groq
+Gemini-Pro -- best model from gemini -- kinda new and polemic
+Llama-2-70b -- largest open-source
+mistralai/mistral-7b-instruct-v0.2 
+mistralai/mixtral-8x7b-instruct-v0.1 -- gpt3.5 level open source model
+Claude-3-largest -- new and from
+medllama
+
+
+MUST:
+
+close:
+
+GPT-3.5-Turbo
+GPT4
+Mistral-Large - have two open source alternatives
+Gemini-Pro - have two open source alternatives
+Claude-3-largest - new
+-----
+open:
+
+Llama-2-70b-Groq
+Mixtral-8x7b-Groq
+mistral-7b-instruct-v0.2 - best on in size
+replicate/vicuna-13b - previous model used
+
+in general open source means open weights, regarding the license
+
+
+poe:
+GPT-3.5-Turbo
+GPT4
+Mistral-Large
+Gemini-Pro
+Claude-3-Opus
+Llama-2-70b-Groq
+Mixtral-8x7b-Groq

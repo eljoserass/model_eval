@@ -13,13 +13,17 @@ class EvaluationDao(BaseDao):
         evaluation = self.session.query(Evaluation).filter(Evaluation.uuid == uuid).first()
         return evaluation
     
+    def get_by_assignee_output_id(self, assigne_output_id: int) -> Evaluation | None:
+        evaluation = self.session.query(Evaluation).filter(Evaluation.assignee_output_id == assigne_output_id).first()
+        return evaluation
+    
     def get_all(self) -> list[Evaluation]:
         evaluation = self.session.query(Evaluation).all()
         return evaluation
 
     def create(self, Evaluation_data: dict) -> Evaluation:
         evaluation = Evaluation(**Evaluation_data)
-        print(evaluation)
+        # print(evaluation)
         self.session.add(evaluation)
         self.session.commit()
         self.session.refresh(evaluation)

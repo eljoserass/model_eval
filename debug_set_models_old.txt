@@ -1,0 +1,14 @@
+mistralai/mixtral-8x7b-instruct-v0.1 replicate
+Mixtral-8x7b-Groq poe
+GPT-3.5-Turbo poe
+GPT4 poe
+Mistral-Large poe
+Gemini-Pro poe
+Llama-2-70b-Groq poe
+fw-mistral-7b poe
+Gemma-7b-FW poe
+mistralai/mistral-7b-instruct-v0.2 replicate
+Claude-3-Opus poe
+Vicuna-13B-V15 poe
+google-deepmind/gemma-2b-it:dff94eaf770e1fc211e425a50b51baa8e4cac6c39ef074681f9e39d778773626 replicate
+google-deepmind/gemma-7b-it:2790a695e5dcae15506138cc4718d1106d0d475e6dca4b1d43f42414647993d5 replicate
